@@ -1,0 +1,65 @@
+artifact_path: model_non_domestic_daily
+flavors:
+  prophet:
+    code: null
+    data: model.pr
+    model_type: Prophet
+    prophet_version: 1.1.5
+  python_function:
+    data: model.pr
+    env:
+      conda: conda.yaml
+      virtualenv: python_env.yaml
+    loader_module: mlflow.prophet
+    python_version: 3.12.4
+mlflow_version: 2.16.2
+model_size_bytes: 3005771
+model_uuid: 97b329bd35a1463d9e4f1145b2ace05f
+run_id: ef2b9972987b409487c9c0ca8afa1f0d
+signature:
+  inputs: '[{"type": "datetime", "name": "ds", "required": true}, {"type": "string",
+    "name": "sector", "required": true}, {"type": "double", "name": "y", "required":
+    true}, {"type": "double", "name": "temperature", "required": true}, {"type": "double",
+    "name": "hdd", "required": true}, {"type": "double", "name": "cdd", "required":
+    true}, {"type": "double", "name": "sat_reg", "required": true}, {"type": "double",
+    "name": "sun_reg", "required": true}, {"type": "boolean", "name": "weekly_covid_addition",
+    "required": true}, {"type": "boolean", "name": "yearly_covid_addition", "required":
+    true}, {"type": "boolean", "name": "weekly_post_covid_addition", "required": true},
+    {"type": "boolean", "name": "weekly_new_normal", "required": true}, {"type": "boolean",
+    "name": "yearly_post_covid_addition", "required": true}]'
+  outputs: '[{"type": "datetime", "name": "ds", "required": true}, {"type": "double",
+    "name": "y", "required": false}, {"type": "string", "name": "sector", "required":
+    true}, {"type": "double", "name": "nominal_temperature", "required": true}, {"type":
+    "double", "name": "nominal_hdd", "required": true}, {"type": "double", "name":
+    "nominal_cdd", "required": true}, {"type": "double", "name": "nominal_sat_reg",
+    "required": true}, {"type": "double", "name": "nominal_sun_reg", "required": true},
+    {"type": "boolean", "name": "flag_weekly_covid_addition", "required": true}, {"type":
+    "boolean", "name": "flag_yearly_covid_addition", "required": true}, {"type": "boolean",
+    "name": "flag_weekly_post_covid_addition", "required": true}, {"type": "boolean",
+    "name": "flag_weekly_new_normal", "required": true}, {"type": "boolean", "name":
+    "flag_yearly_post_covid_addition", "required": true}, {"type": "double", "name":
+    "trend", "required": true}, {"type": "double", "name": "yhat", "required": true},
+    {"type": "double", "name": "yhat_lower", "required": true}, {"type": "double",
+    "name": "yhat_upper", "required": true}, {"type": "double", "name": "trend_lower",
+    "required": true}, {"type": "double", "name": "trend_upper", "required": true},
+    {"type": "double", "name": "holidays", "required": true}, {"type": "double", "name":
+    "multiplicative_terms", "required": true}, {"type": "double", "name": "additive_terms",
+    "required": true}, {"type": "double", "name": "weekly_covid_addition", "required":
+    true}, {"type": "double", "name": "yearly_covid_addition", "required": true},
+    {"type": "double", "name": "weekly_post_covid_addition", "required": true}, {"type":
+    "double", "name": "weekly_new_normal", "required": true}, {"type": "double", "name":
+    "yearly_post_covid_addition", "required": true}, {"type": "double", "name": "yearly",
+    "required": true}, {"type": "double", "name": "weekly", "required": true}, {"type":
+    "double", "name": "temperature", "required": true}, {"type": "double", "name":
+    "hdd", "required": true}, {"type": "double", "name": "cdd", "required": true},
+    {"type": "double", "name": "sat_reg", "required": true}, {"type": "double", "name":
+    "sun_reg", "required": true}, {"type": "double", "name": "xmas_ny", "required":
+    true}, {"type": "double", "name": "residual", "required": false}, {"type": "double",
+    "name": "error_percentage", "required": false}, {"type": "double", "name": "total_yearly",
+    "required": true}, {"type": "double", "name": "total_weekly", "required": true},
+    {"type": "double", "name": "weekly_weekend", "required": true}, {"type": "double",
+    "name": "yhat_detrended", "required": true}, {"type": "double", "name": "daily_weighting",
+    "required": true}, {"type": "datetime", "name": "training_datetime", "required":
+    true}, {"type": "string", "name": "holiday_name", "required": false}]'
+  params: null
+utc_time_created: '2024-10-11 14:34:22.840476'
