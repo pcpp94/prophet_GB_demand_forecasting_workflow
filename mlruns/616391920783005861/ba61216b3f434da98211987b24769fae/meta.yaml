@@ -1,0 +1,15 @@
+artifact_uri: file:///Users/pabloparedes/Documents/prophet_GB_demand_forecasting_workflow/mlruns/616391920783005861/ba61216b3f434da98211987b24769fae/artifacts
+end_time: 1728660190859
+entry_point_name: ''
+experiment_id: '616391920783005861'
+lifecycle_stage: active
+run_id: ba61216b3f434da98211987b24769fae
+run_name: 2024-10-11_19:22:51_non_domestic_daily
+run_uuid: ba61216b3f434da98211987b24769fae
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1728660171201
+status: 3
+tags: []
+user_id: pabloparedes

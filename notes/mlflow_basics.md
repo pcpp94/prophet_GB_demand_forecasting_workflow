@@ -56,3 +56,9 @@ MLflow’s design addresses the core ML lifecycle needs:
 - Standardization of **Environments** (portability and consistency),
 - **Model Packaging** (deployment readiness), and
 - **Lifecycle Management** (version control and model stages).
+
+## In case we are wondering the paths for mlflow
+
+tracking_uri = mlflow.get_tracking_uri() # for the log_metric, log_param
+artifact_uri = mlflow.get_artifact_uri() # for the log_artifact
+run_id = mlflow.active_run().info.run_id # the run_id

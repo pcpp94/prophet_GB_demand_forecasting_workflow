@@ -1,0 +1,14 @@
+aliases: []
+creation_timestamp: 1728660927521
+current_stage: None
+description: ''
+last_updated_timestamp: 1728660927521
+name: gb_non_dom_daily
+run_id: ba61216b3f434da98211987b24769fae
+run_link: ''
+source: file:///Users/pabloparedes/Documents/prophet_GB_demand_forecasting_workflow/mlruns/616391920783005861/ba61216b3f434da98211987b24769fae/artifacts/model_non_domestic_daily
+status: READY
+status_message: null
+storage_location: file:///Users/pabloparedes/Documents/prophet_GB_demand_forecasting_workflow/mlruns/616391920783005861/ba61216b3f434da98211987b24769fae/artifacts/model_non_domestic_daily
+user_id: null
+version: 2

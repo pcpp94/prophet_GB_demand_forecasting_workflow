@@ -1,0 +1,14 @@
+aliases: []
+creation_timestamp: 1728586943491
+current_stage: None
+description: ""
+last_updated_timestamp: 1728586943491
+name: gb_non_dom_monthly
+run_id: cce09a40fdae437f9ade146c39c692a1
+run_link: ""
+source: models:/gb_non_dom_monthly/1
+status: READY
+status_message: null
+storage_location: file:///Users/pabloparedes/Documents/prophet_GB_demand_forecasting_workflow/mlruns/157569667987632095/cce09a40fdae437f9ade146c39c692a1/artifacts/model_non_domestic_monthly
+user_id: null
+version: 2

@@ -1,0 +1,15 @@
+aliases:
+- newcomer
+creation_timestamp: 1728660092332
+current_stage: None
+description: The tWo
+last_updated_timestamp: 1728660128739
+name: gb_non_dom_daily
+run_id: 39ce1130b5f547af956354faeb0ce1a4
+run_link: ''
+source: file:///Users/pabloparedes/Documents/prophet_GB_demand_forecasting_workflow/mlruns/616391920783005861/39ce1130b5f547af956354faeb0ce1a4/artifacts/model_non_domestic_daily
+status: READY
+status_message: null
+storage_location: file:///Users/pabloparedes/Documents/prophet_GB_demand_forecasting_workflow/mlruns/616391920783005861/39ce1130b5f547af956354faeb0ce1a4/artifacts/model_non_domestic_daily
+user_id: null
+version: 1

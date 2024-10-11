@@ -1,7 +1,0 @@
-artifact_location: file:///Users/pabloparedes/Documents/prophet_GB_demand_forecasting_workflow/modelling_mlflow/daily_modelling/mlruns/557914907382003000
-creation_time: 1728566241823
-experiment_id: '557914907382003000'
-last_update_time: 1728566671509
-lifecycle_stage: deleted
-name: GB_daily_non_domestic
-tags: {}
