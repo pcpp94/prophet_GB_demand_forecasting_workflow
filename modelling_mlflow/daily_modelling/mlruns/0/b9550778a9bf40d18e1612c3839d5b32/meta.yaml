@@ -1,0 +1,16 @@
+artifact_uri: file:///Users/pabloparedes/Documents/prophet_GB_demand_forecasting_workflow/modelling_mlflow/daily_modelling/mlruns/0/b9550778a9bf40d18e1612c3839d5b32/artifacts
+deleted_time: 1728565824660
+end_time: 1728564255941
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: deleted
+run_id: b9550778a9bf40d18e1612c3839d5b32
+run_name: entertaining-sow-878
+run_uuid: b9550778a9bf40d18e1612c3839d5b32
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1728564239552
+status: 4
+tags: []
+user_id: pabloparedes

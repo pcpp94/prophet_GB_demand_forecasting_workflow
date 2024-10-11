@@ -1,0 +1,16 @@
+artifact_uri: file:///Users/pabloparedes/Documents/prophet_GB_demand_forecasting_workflow/modelling_mlflow/daily_modelling/mlruns/0/0e47874e61b948239cc847f2dbe4489e/artifacts
+deleted_time: 1728565824658
+end_time: 1728563512282
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: deleted
+run_id: 0e47874e61b948239cc847f2dbe4489e
+run_name: nosy-shad-471
+run_uuid: 0e47874e61b948239cc847f2dbe4489e
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1728563511676
+status: 4
+tags: []
+user_id: pabloparedes

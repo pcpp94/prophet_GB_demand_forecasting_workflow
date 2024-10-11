@@ -1,0 +1,10 @@
+digest: c4c624ae
+name: holidays
+profile: '{"num_rows": 520, "num_elements": 2080}'
+schema: '{"mlflow_colspec": [{"type": "datetime", "name": "ds", "required": true},
+  {"type": "string", "name": "holiday", "required": true}, {"type": "long", "name":
+  "lower_window", "required": true}, {"type": "long", "name": "upper_window", "required":
+  true}]}'
+source: '{"tags": {"mlflow.user": "pabloparedes", "mlflow.source.name": "/Users/pabloparedes/pablo/lib/python3.12/site-packages/ipykernel_launcher.py",
+  "mlflow.source.type": "LOCAL"}}'
+source_type: code

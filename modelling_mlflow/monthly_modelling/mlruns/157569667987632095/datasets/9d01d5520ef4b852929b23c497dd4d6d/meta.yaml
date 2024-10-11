@@ -1,0 +1,20 @@
+digest: fdaed32f
+name: non_dom_monthly_train_dataset
+profile: '{"num_rows": 103, "num_elements": 2266}'
+schema: '{"mlflow_colspec": [{"type": "datetime", "name": "ds", "required": true},
+  {"type": "string", "name": "sector", "required": true}, {"type": "double", "name":
+  "y", "required": true}, {"type": "double", "name": "gdp", "required": true}, {"type":
+  "long", "name": "abnormal", "required": true}, {"type": "long", "name": "covid_1",
+  "required": true}, {"type": "long", "name": "covid_2", "required": true}, {"type":
+  "long", "name": "covid_3", "required": true}, {"type": "long", "name": "is_jan",
+  "required": true}, {"type": "long", "name": "is_feb", "required": true}, {"type":
+  "long", "name": "is_leap", "required": true}, {"type": "long", "name": "is_mar",
+  "required": true}, {"type": "long", "name": "is_apr", "required": true}, {"type":
+  "long", "name": "is_may", "required": true}, {"type": "long", "name": "is_jun",
+  "required": true}, {"type": "long", "name": "is_jul", "required": true}, {"type":
+  "long", "name": "is_aug", "required": true}, {"type": "long", "name": "is_sep",
+  "required": true}, {"type": "long", "name": "is_oct", "required": true}, {"type":
+  "long", "name": "is_nov", "required": true}, {"type": "long", "name": "is_dec",
+  "required": true}, {"type": "long", "name": "weekdays", "required": true}]}'
+source: '{"uri": "/Users/pabloparedes/Documents/prophet_GB_demand_forecasting_workflow/data/gross_demand.parquet"}'
+source_type: local

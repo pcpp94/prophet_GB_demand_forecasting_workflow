@@ -1,0 +1,16 @@
+artifact_uri: file:///Users/pabloparedes/Documents/prophet_GB_demand_forecasting_workflow/modelling_mlflow/daily_modelling/mlruns/0/5b79e5488390489c83f52ec392f87542/artifacts
+deleted_time: 1728565824664
+end_time: 1728563339009
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: deleted
+run_id: 5b79e5488390489c83f52ec392f87542
+run_name: useful-wren-381
+run_uuid: 5b79e5488390489c83f52ec392f87542
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1728563322591
+status: 4
+tags: []
+user_id: pabloparedes

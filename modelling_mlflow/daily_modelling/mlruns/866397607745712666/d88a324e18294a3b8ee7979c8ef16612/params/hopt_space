@@ -1,0 +1,1 @@
+{'changepoint_prior_scale': ('hp.uniform', 0.01, 0.05), 'seasonality_prior_scale': ('hp.uniform', 5, 30), 'holidays_prior_scale': ('hp.uniform', 5, 30), 'changepoint_range': ('hp.uniform', 0.99, 1), 'temperature': ('hp.uniform', 5, 30), 'hdd': ('hp.uniform', 5, 30), 'cdd': ('hp.uniform', 5, 30), 'sat_reg': ('hp.uniform', 5, 30), 'sun_reg': ('hp.uniform', 5, 30)}

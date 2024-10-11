@@ -1,0 +1,15 @@
+digest: 8c5a8747
+name: non_dom_train_dataset
+profile: '{"num_rows": 3134, "num_elements": 40742}'
+schema: '{"mlflow_colspec": [{"type": "datetime", "name": "ds", "required": true},
+  {"type": "string", "name": "sector", "required": true}, {"type": "double", "name":
+  "y", "required": true}, {"type": "double", "name": "temperature", "required": true},
+  {"type": "double", "name": "hdd", "required": true}, {"type": "double", "name":
+  "cdd", "required": true}, {"type": "double", "name": "sat_reg", "required": true},
+  {"type": "double", "name": "sun_reg", "required": true}, {"type": "boolean", "name":
+  "weekly_covid_addition", "required": true}, {"type": "boolean", "name": "yearly_covid_addition",
+  "required": true}, {"type": "boolean", "name": "weekly_post_covid_addition", "required":
+  true}, {"type": "boolean", "name": "weekly_new_normal", "required": true}, {"type":
+  "boolean", "name": "yearly_post_covid_addition", "required": true}]}'
+source: '{"uri": "/Users/pabloparedes/Documents/prophet_GB_demand_forecasting_workflow/data/gross_demand.parquet"}'
+source_type: local

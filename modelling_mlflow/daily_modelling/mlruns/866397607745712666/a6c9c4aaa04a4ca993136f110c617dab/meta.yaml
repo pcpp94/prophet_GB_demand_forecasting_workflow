@@ -1,0 +1,16 @@
+artifact_uri: file:///Users/pabloparedes/Documents/prophet_GB_demand_forecasting_workflow/modelling_mlflow/daily_modelling/mlruns/866397607745712666/a6c9c4aaa04a4ca993136f110c617dab/artifacts
+deleted_time: 1728568204686
+end_time: 1728568183784
+entry_point_name: ''
+experiment_id: '866397607745712666'
+lifecycle_stage: deleted
+run_id: a6c9c4aaa04a4ca993136f110c617dab
+run_name: 2024-10-10_17:49:27_non_domestic_daily
+run_uuid: a6c9c4aaa04a4ca993136f110c617dab
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1728568167804
+status: 4
+tags: []
+user_id: pabloparedes
