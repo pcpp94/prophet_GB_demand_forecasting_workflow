@@ -1,0 +1,52 @@
+artifact_path: model_non_domestic_monthly
+flavors:
+  prophet:
+    code: null
+    data: model.pr
+    model_type: Prophet
+    prophet_version: 1.1.5
+  python_function:
+    data: model.pr
+    env:
+      conda: conda.yaml
+      virtualenv: python_env.yaml
+    loader_module: mlflow.prophet
+    python_version: 3.12.4
+mlflow_version: 2.16.2
+model_size_bytes: 80152
+model_uuid: b65870c6fa854572971d7c67143bc380
+run_id: 8c880f03d1774769bc8bf90e2db21e38
+signature:
+  inputs: '[{"type": "datetime", "name": "ds", "required": true}, {"type": "string",
+    "name": "sector", "required": true}, {"type": "double", "name": "y", "required":
+    true}, {"type": "double", "name": "gdp", "required": true}, {"type": "long", "name":
+    "abnormal", "required": true}, {"type": "long", "name": "covid_1", "required":
+    true}, {"type": "long", "name": "covid_2", "required": true}, {"type": "long",
+    "name": "covid_3", "required": true}, {"type": "long", "name": "is_jan", "required":
+    true}, {"type": "long", "name": "is_feb", "required": true}, {"type": "long",
+    "name": "is_leap", "required": true}, {"type": "long", "name": "is_mar", "required":
+    true}, {"type": "long", "name": "is_apr", "required": true}, {"type": "long",
+    "name": "is_may", "required": true}, {"type": "long", "name": "is_jun", "required":
+    true}, {"type": "long", "name": "is_jul", "required": true}, {"type": "long",
+    "name": "is_aug", "required": true}, {"type": "long", "name": "is_sep", "required":
+    true}, {"type": "long", "name": "is_oct", "required": true}, {"type": "long",
+    "name": "is_nov", "required": true}, {"type": "long", "name": "is_dec", "required":
+    true}, {"type": "long", "name": "weekdays", "required": true}]'
+  outputs: '[{"type": "datetime", "name": "ds", "required": true}, {"type": "double",
+    "name": "y", "required": false}, {"type": "string", "name": "sector", "required":
+    true}, {"type": "double", "name": "nominal_gdp", "required": true}, {"type": "long",
+    "name": "nominal_weekdays", "required": true}, {"type": "double", "name": "trend",
+    "required": true}, {"type": "double", "name": "yhat", "required": true}, {"type":
+    "double", "name": "yhat_lower", "required": true}, {"type": "double", "name":
+    "yhat_upper", "required": true}, {"type": "double", "name": "trend_lower", "required":
+    true}, {"type": "double", "name": "trend_upper", "required": true}, {"type": "double",
+    "name": "multiplicative_terms", "required": true}, {"type": "double", "name":
+    "additive_terms", "required": true}, {"type": "double", "name": "gdp", "required":
+    true}, {"type": "double", "name": "is_leap", "required": true}, {"type": "double",
+    "name": "weekdays", "required": true}, {"type": "double", "name": "yearly", "required":
+    true}, {"type": "double", "name": "externalities", "required": true}, {"type":
+    "double", "name": "residual", "required": false}, {"type": "double", "name": "error_percentage",
+    "required": false}, {"type": "double", "name": "yhat_detrended", "required": true},
+    {"type": "datetime", "name": "training_datetime", "required": true}]'
+  params: null
+utc_time_created: '2024-10-11 15:42:46.356944'
