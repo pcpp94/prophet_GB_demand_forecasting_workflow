@@ -71,3 +71,29 @@ class Scenarios_Client:
         # scenario_num would be: 1, 2, 3...
         # scenario would be the name of the columns in the variable_df DataFrames.
         # variables: the values.
+
+        if len(self.variables) == 0:
+            raise ValueError("No variables have been added to the object.")
+
+        df_aux = self.variables['temperature']['table'].copy()
+
+
+# Example:
+# import pandas as pd
+# from itertools import product
+# import os
+
+# df1 = pd.DataFrame({"date": pd.date_range(start="2015-01-01", end="2024-01-10", freq='D')})
+# df2 = pd.DataFrame({"date": pd.date_range(start="2015-01-01", end="2024-01-10", freq='D')})
+
+# for x in range(20):
+#     df1['temp_'+str(x+1)] = x ** 2
+
+# for x in range(20):
+#     df2['cdd_'+str(x+1)] = x ** 2.2
+
+# paired:
+# list(zip(var1,var2))
+
+# cross:
+# list(product(var1,var2))
