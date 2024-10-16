@@ -18,7 +18,7 @@ def get_ensure_single_datetime_column(df: pd.DataFrame):
 
 def get_ensure_granularity(df: pd.DataFrame, date_col: str):
 
-    if len(df[date_col].diff().dropna().unique()) != 1:
+    if len(df[date_col].diff().dropna().unique()) > 4:
         raise IndexError("The DataFrame date steps aren't consistent")
 
     hours = df[date_col].diff().dropna().unique()[0].total_seconds()/3600

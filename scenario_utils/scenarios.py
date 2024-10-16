@@ -11,6 +11,8 @@ class Scenarios_Client:
         self.granular_model = granular_model
         self.monthly_model = monthly_model
         self.paired_variables = []
+        self.scenarios_dfs = []
+        self.variables_granularities = set()
 
         # Getting the granularity of the "Granular Model": Could be Hourly, 30min, 15min...
         self.granular_model_granularity_symbol, self.granular_model_granularity_nominal = get_ensure_granularity(
@@ -26,6 +28,7 @@ class Scenarios_Client:
         if self.monthly_granularity != '1month':
             raise TypeError("A monthly model is needed as an input")
 
+        self.added_variables = []
         # Variables' Dictionary.
         self.variables = defaultdict(lambda: defaultdict(dict))
 
@@ -50,10 +53,13 @@ class Scenarios_Client:
         self.variables[variable_name]['granularity_symbol'] = granularity_symbol
         self.variables[variable_name]['granularity_nominal'] = granularity_nominal
         self.variables[variable_name]['granularity'] = granularity
+        self.variables_granularities.add(granularity)
         self.variables[variable_name]['scenarios_num'] = len(scenarios)
         self.variables[variable_name]['table'] = variable_df
 
-        return f"Added {self.variables}"
+        self.added_variables.append(variable_name)
+
+        return f"Added {variable_name}"
 
     def variables_pairing(self, variables: List[str]):
 
@@ -115,7 +121,6 @@ class Scenarios_Client:
 
         for scenario in final_scenarios_list:
 
-            scenarios_dfs = []
             granularity_checks = []
             df_dict = defaultdict(lambda: defaultdict(dict))
 
@@ -128,8 +133,12 @@ class Scenarios_Client:
                 else:
                     df_dict[granularity] = df_dict[granularity].merge(
                         aux, how='left', on=['ds'])
-                if set(granularity) > 2:
+                if len(set(granularity_checks)) > 2:
                     raise ValueError(
                         "The variables need to be of granularity: 1month and an extra one")
 
-            scenarios_dfs.append(df_dict)
+            for gran in self.variables_granularities:
+                df_dict[gran] = df_dict[gran].dropna()
+            self.scenarios_dfs.append(df_dict)
+
+        return self.scenarios_dfs
