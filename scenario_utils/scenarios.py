@@ -1,5 +1,7 @@
 import pandas as pd
 from prophet import Prophet
+import mlflow
+from mlflow.tracking import MlflowClient
 from collections import defaultdict
 from typing import List
 from itertools import product
@@ -7,22 +9,36 @@ from .utils import get_ensure_single_datetime_column, get_ensure_granularity, en
 
 
 class Scenarios_Client:
-    def __init__(self, granular_model: Prophet, monthly_model: Prophet):
-        self.granular_model = granular_model
-        self.monthly_model = monthly_model
+    def __init__(self, granular_model: mlflow.pyfunc.PyFuncModel, monthly_model: mlflow.pyfunc.PyFuncModel, mlflow_uri: str):
         self.paired_variables = []
         self.scenarios_dfs = []
         self.variables_granularities = set()
 
+        # Client for forecast retrieval:
+        mlflow.set_tracking_uri(mlflow_uri)
+        client = MlflowClient()
+
+        # Monthly Model forecast retrieval and Get Prophet Object:
+        monthly_run_id = monthly_model.metadata.run_id
+        self.monthly_forecast = pd.read_parquet(client.download_artifacts(
+            monthly_run_id, "forecast_outputs/forecast_full_df.parquet"))
+        self.monthly_model = monthly_model.get_raw_model()
+
+        # Daily Model forecast retrieval and Get Prophet Object:
+        daily_run_id = granular_model.metadata.run_id
+        self.granular_forecast = pd.read_parquet(client.download_artifacts(
+            daily_run_id, "forecast_outputs/forecast_full_df.parquet"))
+        self.granular_model = granular_model.get_raw_model()
+
         # Getting the granularity of the "Granular Model": Could be Hourly, 30min, 15min...
         self.granular_model_granularity_symbol, self.granular_model_granularity_nominal = get_ensure_granularity(
-            granular_model.history, date_col='ds')
+            self.granular_model.history, date_col='ds')
         self.granular_granularity = str(
             self.granular_model_granularity_nominal) + self.granular_model_granularity_symbol
 
         # Making sure a monthly model was given:
         self.monthly_model_granularity_symbol, self.monthly_model_granularity_nominal = get_ensure_granularity(
-            monthly_model.history, date_col='ds')
+            self.monthly_model.history, date_col='ds')
         self.monthly_granularity = str(
             self.monthly_model_granularity_nominal) + self.monthly_model_granularity_symbol
         if self.monthly_granularity != '1month':
