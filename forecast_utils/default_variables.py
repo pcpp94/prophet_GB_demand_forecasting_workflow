@@ -5,7 +5,7 @@ import os
 # Getting the path of the files being used.
 folder_path = os.path.dirname(os.path.abspath(__file__))
 data_folder = os.path.abspath(os.path.join(folder_path, "..", "data"))
-outputs_folder = os.path.abspath(os.path.join(folder_path, "..", "outputs"))
+outputs_folder = os.path.abspath(os.path.join(folder_path, "..", "model_outputs"))
 files = []
 for x in os.walk(data_folder):
     for y in x[1]:
