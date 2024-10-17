@@ -4,7 +4,7 @@ import os
 
 repo = Repo(os.path.dirname(__file__), search_parent_directories=True)
 root_path = repo.git.rev_parse("--show-toplevel")
-
+scenario_outputs = os.path.join(root_path, 'scenario_outputs')
 
 def reducing(x, y):
     if len(str(x)) == 19:
@@ -13,4 +13,4 @@ def reducing(x, y):
         return str(x) + ',' + str(y)[0:10]
 
 
-__all__ = ["root_path"]
+__all__ = ["root_path", "scenario_outputs"]

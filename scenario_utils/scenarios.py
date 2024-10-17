@@ -1,18 +1,26 @@
+from .utils import get_ensure_single_datetime_column, get_ensure_granularity, ensure_variables_in_object, ensure_variables_length
+from .config import scenario_outputs
 import pandas as pd
+import sys
+import os
+import datetime
 from prophet import Prophet
 import mlflow
 from mlflow.tracking import MlflowClient
 from collections import defaultdict
 from typing import List
 from itertools import product
-from .utils import get_ensure_single_datetime_column, get_ensure_granularity, ensure_variables_in_object, ensure_variables_length
 
+levels = 1
+sys.path.append(os.path.abspath(os.path.join(".", "../"*levels)))
+import forecast_utils as utils
 
 class Scenarios_Client:
     def __init__(self, granular_model: mlflow.pyfunc.PyFuncModel, monthly_model: mlflow.pyfunc.PyFuncModel, mlflow_uri: str):
         self.paired_variables = []
         self.scenarios_dfs = []
         self.variables_granularities = set()
+        self.create_scenarios_check = False
 
         # Client for forecast retrieval:
         mlflow.set_tracking_uri(mlflow_uri)
@@ -157,4 +165,160 @@ class Scenarios_Client:
                 df_dict[gran] = df_dict[gran].dropna()
             self.scenarios_dfs.append(df_dict)
 
+        self.create_scenarios_check = True
         return self.scenarios_dfs
+
+    def run_ony_granular_scenario(self, scenario_number):
+
+        if self.create_scenarios_check == False:
+            raise ValueError(
+                "Scenarios have not been created, run method 'create_scenarios()")
+
+        granularity_one_digit = [x for x in list(
+            self.variables_granularities) if x != '1month'][0][1:].upper()[0]
+        category = self.granular_model.history['sector'].unique()[0]
+        # Putting the Granular scenario variables into the "Future DF"
+
+        # Getting the variables' ordered names:
+        granular_scenario_variables_ordered_list = []
+        granular_granularity = [x for x in list(
+            self.variables_granularities) if x != '1month'][0]
+        for var in self.variables.keys():
+            if self.variables[var]["granularity"] == granular_granularity:
+                granular_scenario_variables_ordered_list.append(var)
+
+        # Getting the scenario NUMBER 0 regressors and changing the col names to the ordered variable names (from temperature_1 to temperature for example)
+        scenarios_df = self.scenarios_dfs
+        gran_regs_df = scenarios_df[scenario_number][granular_granularity].copy(
+        )
+        fc_date = gran_regs_df['ds'].max()
+        scen_cols = [x for x in gran_regs_df.columns if x != 'ds']
+        gran_regs_df = gran_regs_df.rename(columns=dict(
+            zip(scen_cols, granular_scenario_variables_ordered_list)))
+
+        # Creating the future_df and replacing the "default variables" for the new values from the scenario
+        future_df = utils.make_forecast_df(granularity=granularity_one_digit, category=category, forecast_date=fc_date).drop(
+            columns=granular_scenario_variables_ordered_list)
+        future_df = future_df.merge(gran_regs_df, how='left', on='ds').dropna()
+
+        # Forecasting the future_df and getting the "weather_bh_corrected distribution" to add onto the monthly model.
+        simple_fc = self.granular_model.predict(future_df)
+        self.granular_model.granularity = granularity_one_digit
+        granular_df = utils.full_forecast_df(
+            model=self.granular_model, future=future_df, forecast=simple_fc)
+        granular_df['year_month'] = granular_df['ds'].dt.to_period(
+            "M").astype(str)
+        granular_df['year_month'] = pd.to_datetime(
+            granular_df['year_month'], format="%Y-%m")
+        granular_df['weather_bh_terms'] = granular_df[['temperature', 'cdd', 'hdd', 'holidays']].sum(
+            axis=1) - granular_df[[x for x in granular_df.columns.tolist() if 'lockdown' in x]].sum(axis=1)
+        granular_df['corrected_multiplicative_terms'] = 1 + \
+            (granular_df['multiplicative_terms'] -
+             granular_df['weather_bh_terms'])
+        granular_df['normal_multiplicative_terms'] = 1 + \
+            granular_df['multiplicative_terms']
+        granular_df['yhat_wc_bh'] = granular_df['trend'] * \
+            granular_df['corrected_multiplicative_terms']
+        granular_df['yhat_real_proportion'] = granular_df.groupby(
+            'year_month')['corrected_multiplicative_terms'].transform(lambda x: x.sum())
+        granular_df['yhat_real_proportion'] = granular_df['normal_multiplicative_terms'] / \
+            granular_df['yhat_real_proportion']
+        granular_df.columns = "granular_" + granular_df.columns
+
+        # Getting the columns we are interested in:
+        regressors = []
+        for reg in granular_scenario_variables_ordered_list:
+            regressors.append("granular_"+reg)
+            regressors.append("granular_nominal_"+reg)
+        granular_df = granular_df.rename(
+            columns={"granular_year_month": 'monthly_ds'})
+        granular_df = granular_df[[
+            'granular_ds', 'monthly_ds', 'granular_yhat_real_proportion', *regressors]]
+
+        return granular_df
+
+    def run_ony_monthly_scenario(self, scenario_number):
+
+        if self.create_scenarios_check == False:
+            raise ValueError(
+                "Scenarios have not been created, run method 'create_scenarios()")
+
+        granularity_one_digit = 'M'
+        category = self.granular_model.history['sector'].unique()[0]
+        # Putting the Monthly scenario variables into the "Future DF"
+
+        # Getting the variables' ordered names:
+        monthly_model_scenario_variables_ordered_list = []
+        monthly_granularity = '1month'
+        for var in self.variables.keys():
+            if self.variables[var]["granularity"] == monthly_granularity:
+                monthly_model_scenario_variables_ordered_list.append(var)
+
+        # Getting the scenario NUMBER 0 regressors and changing the col names to the ordered variable names (from gdp_1 to gdp for example)
+        scenarios_df = self.scenarios_dfs
+        gran_regs_df = scenarios_df[scenario_number][monthly_granularity].copy(
+        )
+        fc_date = gran_regs_df['ds'].max()
+        scen_cols = [x for x in gran_regs_df.columns if x != 'ds']
+        gran_regs_df = gran_regs_df.rename(columns=dict(
+            zip(scen_cols, monthly_model_scenario_variables_ordered_list)))
+
+        # Creating the future_df and replacing the "default variables" for the new values from the scenario
+        future_df = utils.make_forecast_df(granularity=granularity_one_digit, category=category, forecast_date=fc_date).drop(
+            columns=monthly_model_scenario_variables_ordered_list)
+        future_df = future_df.merge(gran_regs_df, how='left', on='ds').dropna()
+
+        # Forecasting the future_df and getting the macro scenario.
+        simple_fc = self.monthly_model.predict(future_df)
+        self.monthly_model.granularity = granularity_one_digit
+        monthly_df = utils.full_forecast_df(
+            model=self.monthly_model, future=future_df, forecast=simple_fc)
+        monthly_df = monthly_df.rename(columns={'ds': 'monthly_ds'})
+
+        # Getting the columns we are interested in:
+        regressors = []
+        for reg in monthly_model_scenario_variables_ordered_list:
+            regressors.append(reg)
+            regressors.append("nominal_"+reg)
+        monthly_df = monthly_df[['monthly_ds', 'yhat', *regressors]]
+
+        return monthly_df
+
+    def run_one_scenario(self, scenario_number):
+
+        if self.create_scenarios_check == False:
+            raise ValueError(
+                "Scenarios have not been created, run method 'create_scenarios()")
+
+        scenario_number = scenario_number
+        granular_df = self.run_ony_granular_scenario(
+            scenario_number=scenario_number)
+        monthly_df = self.run_ony_monthly_scenario(
+            scenario_number=scenario_number)
+
+        # Final Thingies:
+        df = granular_df.merge(monthly_df, how='left', on='monthly_ds')
+        df['scenario_yhat'] = df['yhat'] * df['granular_yhat_real_proportion']
+        df = df.drop(
+            columns=['yhat', 'granular_yhat_real_proportion', 'monthly_ds'])
+
+        return df
+
+    def run_all_scenarios(self):
+
+        if self.create_scenarios_check == False:
+            raise ValueError(
+                "Scenarios have not been created, run method 'create_scenarios()")
+
+        self.outputs_df = pd.DataFrame()
+
+        for scenario_number in range(len(self.scenarios_dfs)):
+            df = self.run_one_scenario(scenario_number=scenario_number)
+            df['scenario_number'] = scenario_number + 1
+            self.outputs_df = pd.concat([self.outputs_df, df])
+
+        now = datetime.datetime.today().strftime(format="%Y_%m_%d_%H_%M_%S_")
+        self.outputs_df = self.outputs_df.reset_index(drop=True)
+        self.outputs_df.to_parquet(os.path.join(scenario_outputs, f"{now}scenarios.parquet"))
+        
+        return self.outputs_df
